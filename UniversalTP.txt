@@ -270,6 +270,8 @@ TextSize=25, Font="SourceSans", BackgroundTransparency=1, Position=UDim2.new(0,0
 yLbl=Create("TextLabel",containerStats,{Name="yLbl", TextWrapped=true, TextStrokeTransparency=0.30000001192093, Size=UDim2.new(0.333,0,0.5,0), BorderColor3=Color3.new(0.106,0.165,0.208), Text="0.00",
 TextSize=25, Font="SourceSans", BackgroundTransparency=1, Position=UDim2.new(0.333,0,0.5,0), TextColor3=Color3.new(0,1,0)})
 zLbl=Create("TextLabel",containerStats,{Name="zLbl", TextWrapped=true, TextStrokeTransparency=0.30000001192093, Size=UDim2.new(0.333,0,0.5,0), BorderColor3=Color3.new(0.106,0.165,0.208), Text="0.00",
+TextSize=25, Font="SourceSans", BackgroundTransparency=1, Position=UDim2.new(0.666,0,0.5,0), TextColor3=Color3.new(1,1,0)})
+copyPosBtn=Create("TextButton",containerStats,{Name="copyPosBtn", BackgroundTransparency=1, Size=UDim2.new(1,0,0.5,0), Position=UDim2.new(0,0,0.5,0), TextScaled=true, Text="Copy position", TextColor3=Color3.new(1,1,1),
 BackgroundColor3=Color3.new(), Font="SourceSansLight", BorderSizePixel=0, ZIndex=2, TextTransparency=1})
 partInfoGui=Create("BillboardGui",gui,{Name="partInfoGui", AlwaysOnTop=true, StudsOffset=Vector3.new(0,5,0), ResetOnSpawn=false, Size=UDim2.new(0,40,0,40), Enabled=false, Active=true})
 partNameLbl=Create("TextLabel",partInfoGui,{Name="partNameLbl", BackgroundTransparency=1, Size=UDim2.new(1,0,0.5,0), Font="Highway", TextColor3=Color3.new(1,0.667,0), TextSize=26, TextStrokeTransparency=0})
@@ -401,6 +403,20 @@ espLimitBox.Text = oldEspLimit
 end
 oldEspLimit = espLimitBox.Text
 end)
+if setclipboard or Clipboard then
+local tweenCopyOut = game:GetService("TweenService"):Create(copyPosBtn,TweenInfo.new(0.33),{TextTransparency=0,BackgroundTransparency=0.4})
+local tweenCopyIn = game:GetService("TweenService"):Create(copyPosBtn,TweenInfo.new(0.33),{TextTransparency=1,BackgroundTransparency=1})
+copyPosBtn.MouseEnter:Connect(function() tweenCopyOut:Play() end)
+copyPosBtn.MouseLeave:Connect(function() tweenCopyIn:Play() end)
+copyPosBtn.MouseButton1Click:Connect(function()
+local pos = root.Position
+if setclipboard then
+setclipboard(string.format("%.2f, %.2f, %.2f",pos.X,pos.Y,pos.Z))
+else
+Clipboard.set(string.format("%.2f, %.2f, %.2f",pos.X,pos.Y,pos.Z))
+end
+end)
+end
 --// input //
 local function onMouseDown()
 if UIS:IsKeyDown(settings.clickespKey) or UIS:IsKeyDown(settings.clicktpKey) then
