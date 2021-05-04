@@ -146,7 +146,7 @@ if game.PlaceId == Ids.Lobby then
     end
     if GetCash() > 700000 then 
             print("Creating game..")
-            if getgenv().Heist == AvaiableHeists["Golden Mask Casino"] and game:GetService("MarketplaceService"):UserOwnsGamePassAsync(game:GetService("Players").LocalPlayer.UserIdGamepasses["Golden Mask Casino"]) ~= true then
+            if getgenv().Heist == AvaiableHeists["Golden Mask Casino"] and game:GetService("MarketplaceService"):UserOwnsGamePassAsync(game:GetService("Players").LocalPlayer.UserId.Gamepasses["Golden Mask Casino"]) ~= true then
                 MakeLobby("Authority","Nightmare")
                 return;
             end
